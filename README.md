@@ -40,6 +40,8 @@ To simulate a linear regression dataset
 
 `adareg.res = adareg.result$x.res`
 
+`res.fit = adareg.result$res.info`
+
 To plot the histogram of the residuals
 
 `hist(adareg.res, freq=FALSE, main="Histogram of residuals")`
