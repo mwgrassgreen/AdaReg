@@ -13,38 +13,16 @@ Please contact Meng Wang by email <mengw1@stanford.edu> for questions.
 
 `adareg.result = AdaReg(design.mx, response.y, gam.seq = seq(0, 3, by=.1), var.gp.id=NULL, tol=10^(-4), step=50)`
 
-`adareg.coef = adareg.result$beta.rob.fit`
+`adareg.coef = adareg.result$beta.rob.fit` (the estimated coefficients)
 
-`adareg.var = adareg.result$var.sig.gp.fit`
+`adareg.var = adareg.result$var.sig.gp.fit`(the estimated variance)
 
-`adareg.res = adareg.result$x.res`
+`adareg.res = adareg.result$x.res` (a vector of residuals)
 
-`res.fit = adareg.result$res.info`
-
-### Input
-   design.mx --- the design matrix in linear regression
-   
-   rsponse.y --- the response variable in linear regression
-   
-   gam.seq --- a sequence of gamma's (default: seq(0, 3, by=.1))
-   
-   var.gp.id --- a vector of groups indicating the samples in the same variance group (default: all the samples have the same variance)
-   
-   tol --- tolerance for interations (default: 10^(-4))
-   
-   step --- step limit (default: 50)
-        
-### Output
-   adareg.coef --- the estimated coefficients
-   
-   adareg.var --- the estimated sample variance
-   
-   adareg.res --- a vector of residuals
-   
-   res.fit --- fitting info for the residuals
+`res.fit = adareg.result$res.info`(fitting info for the residuals)
    
 ## Example
-To simulate a linear regression dataset from sim.dat.fn() (details to see the paper)
+To simulate a linear regression dataset 
 
 `dat = sim.dat.fn(n=1000, p=20, pi1=0.1, mu1=3, x.mu=0, x.sd=10, e.mu=0, e.sd=1)`
 
