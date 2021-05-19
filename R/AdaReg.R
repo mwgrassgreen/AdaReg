@@ -102,9 +102,12 @@ AdaReg = function(X, y, gam.seq = seq(0, 3, by=.1), var.gp.id=NULL, mu.fix.value
     }
     
     # diagnosis
-    if (abs(res.rob.fit.0$est.hat["mu0.hat"]) >= 1) {
-    	    print("need further check on the fitting")
+    if(!is.null(res.rob.fit.0) & sum(is.na(res.rob.fit.0$est.hat)) ==	 0) {
+	    if (abs(res.rob.fit.0$est.hat["mu0.hat"]) >= 1) {
+	    	    print("need further check on the fitting")
+	    }    	
     }
+
     
     return(list(beta.rob.fit = c(beta.0), var.sig.gp.fit=c(var.sig.gp.0), x.res=c(res.0), res.info = res.rob.fit.0$est.hat, x.w=  c(res.rob.fit.0$x.w), mu.res.int = mu.res.int, sd.res.int=sd.res.int, beta.int=beta.int, var.sig.gp.int=var.sig.gp.int, diff.par.int=diff.par.int ))
 
@@ -116,7 +119,7 @@ AdaReg = function(X, y, gam.seq = seq(0, 3, by=.1), var.gp.id=NULL, mu.fix.value
 adapt.gam.rob.fit.fn = function (x.00, gam.seq, step=50, mu.fix=NULL, var.fix=NULL, bin.num=NULL) {
 
 	x.0 = x.00[!is.na(x.00)]
-	nm = c("mu0.hat", "sd0.hat", "pi0.hat", 'crt')
+	nm = c("mu0.hat", "sd0.hat", "pi0.hat", 'efdr0.hat')
 	par.hat = matrix(NA, length(gam.seq), length(nm))
 	rownames(par.hat) = gam.seq
 	colnames(par.hat) = nm
@@ -134,7 +137,7 @@ adapt.gam.rob.fit.fn = function (x.00, gam.seq, step=50, mu.fix=NULL, var.fix=NU
 			}
 
 	}
-	crt.hat.0 = abs(pmin(par.hat[,'crt'], 10) - 1)
+	crt.hat.0 = abs(pmin(par.hat[,'efdr0.hat'], 10) - 1)
 	ind.comp = !is.na(crt.hat.0)
 	gam.comp = gam.seq[ind.comp]
 	if (length(gam.comp)  == 0 ) {
@@ -150,11 +153,11 @@ adapt.gam.rob.fit.fn = function (x.00, gam.seq, step=50, mu.fix=NULL, var.fix=NU
 		colnames(par.hat) = nm
 		rownames(par.hat) = gam.comp
 		
-		crt.est.0 = pmin(par.hat[,'crt'], 10)
+		crt.est.0 = pmin(par.hat[,'efdr0.hat'], 10)
 		gam.sel = gam.comp[which.min(crt.hat.0)]
 		
 		gam.sel.char = as.character(gam.sel)
-		est.hat = c(length(x.0), gam.sel, par.hat[gam.sel.char, c("mu0.hat", "sd0.hat", "pi0.hat", "crt")])
+		est.hat = c(length(x.0), gam.sel, par.hat[gam.sel.char, c("mu0.hat", "sd0.hat", "pi0.hat", "efdr0.hat")])
 		names(est.hat)[1:2] = c("n.observed", "gam.sel")
 		
 		w.nu = dnorm(x.00, est.hat["mu0.hat"], est.hat["sd0.hat"])^est.hat["gam.sel"]
@@ -186,7 +189,7 @@ efdr.0.fn = function (x, mu.hat, var.hat, gam, bin.num=NULL) {
 	    p.hat.bin =  cnt.bk/sum(cnt.bk)
 	    null.efdr.hat = min(1,frac.hat) * sum(p0.hat.bin^2/p.hat.bin)	
 	    est.sum = c(gam, mu.hat, sqrt(var.hat),  frac.hat, null.efdr.hat)
-	    names(est.sum) = c("gamma", "mu0.hat", "sd0.hat", "pi0.hat",  'crt')
+	    names(est.sum) = c("gamma", "mu0.hat", "sd0.hat", "pi0.hat",  'efdr0.hat')
         return(est.sum)
 }
 
