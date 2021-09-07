@@ -1,5 +1,5 @@
 # AdaReg
-AdaReg is a R package to robustly estimate linear regression coefficients and detect outliers, analyzed in the paper "AdaReg: Data Adaptive Robust Estimation in Linear Regression with Application in GTEx Gene Expressions". 
+AdaReg is a R package to robustly estimate linear regression coefficients and detect outliers, developed in the paper [AdaReg: Data Adaptive Robust Estimation in Linear Regression with Application in GTEx Gene Expressions](https://pubmed.ncbi.nlm.nih.gov/34252998/) published in Statistical Applications in Genetics and Molecular Biology, 2021. 
 
 Please contact Meng Wang by email <mengw1@stanford.edu> for questions. 
 
@@ -9,7 +9,7 @@ Please contact Meng Wang by email <mengw1@stanford.edu> for questions.
 `install_github("mwgrassgreen/AdaReg")`
 
 ## Usage
-`library(AdaReg)`
+`library(AdaReg)` (or call the source functions under the R folder)
 
 `adareg.result = AdaReg(design.mx, response.y, gam.seq = seq(0, 3, by=.1), var.gp.id=NULL, tol=10^(-4), step=50)`
 
