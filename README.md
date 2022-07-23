@@ -49,3 +49,8 @@ To plot the histogram of the residuals
 `curve(res.fit["pi0.hat"] * dnorm(x, res.fit["mu0.hat"], res.fit["sd0.hat"]), min(adareg.res, na.rm=TRUE), max(adareg.res, na.rm=TRUE), add=TRUE, col="red", lwd=2)` (fitted Gaussian desnity curve)
 
 `rug(adareg.res[out.ind], col="blue", lwd=2)` (true outliers)
+
+## More information
+For an application to caluculate tissue-specificity scores, to check our [AdaTiSS](https://github.com/mwgrassgreen/AdaTiSS) package.
+
+For a related robust normalization work, to check our [RobNorm](https://github.com/mwgrassgreen/RobNorm) package.
